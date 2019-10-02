@@ -2,7 +2,6 @@ const { pool } = require('../config/database')
 const bcrypt = require('bcrypt')
 const { ObjectLength } = require('../lib/codehelper')
 const jwt = require('jsonwebtoken')
-require('dotenv').config()
 class User{
     createUser(username, password, firstName, lastName, mobileNo, phoneNo, email, roleId){
         const encPassword = bcrypt.hashSync(password, 10)
