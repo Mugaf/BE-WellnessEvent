@@ -20,8 +20,8 @@ class Role{
 
     readRole(roleId)
     {
-        let strWhere = (roleId !== undefined)? `WHERE a.roleId=${pool.escape(rolid)} AND isDelete = 0`
-                    : 'WHERE isDelete = 0'
+        let strWhere = (roleId !== undefined)? `WHERE a.roleId=${pool.escape(rolid)} AND isDeleted = 0`
+                    : 'WHERE isDeleted = 0'
         return new Promise((resolve, reject) => {
             pool.query(`SELECT a.roleid, a.rolename, a.roledetail FROM account_role a
             ${strWhere}`, (error, result, fields) => {
@@ -40,8 +40,8 @@ class Role{
     {
         let strWhere = `WHERE roleid=${pool.escape(roleId)} AND isDeleted=0`
         return new Promise((resolve, reject) => {
-            pool.query(`UPDATE account_role SET rolename='${pool.escape(roleName)}', 
-            roledetail='${pool.escape(roleDetail)}' ${strWhere}`, (error, result, fields) => {
+            pool.query(`UPDATE account_role SET rolename=${pool.escape(roleName)}, 
+            roledetail=${pool.escape(roleDetail)} ${strWhere}`, (error, result, fields) => {
                 if(error){
                     reject(error)
                 }
@@ -56,8 +56,8 @@ class Role{
     deleteRole(roleId)
     {
         return new Promise((resolve, reject) => {
-            pool.query(`UPDATE account_role SET isDelete=1 WHERE roleid=${pool.escape(roleId)}
-             AND isDelete = 0`, 
+            pool.query(`UPDATE account_role SET isDeleted = 1 WHERE roleid=${pool.escape(roleId)}
+             AND isDeleted = 0`, 
             (error, result, fields) => {
                 if(error){
                     reject(error)
