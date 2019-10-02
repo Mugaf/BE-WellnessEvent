@@ -26,8 +26,8 @@ class User{
     readUser(userId){
         return new Promise((resolve,reject) => {
             let strWhere = ((userId !== undefined)? 
-            ` WHERE a.userid=${pool.escape(userId)} AND a.isDelete = 0`
-            : `WHERE a.isDelete = 0`)
+            ` WHERE a.userid=${pool.escape(userId)} AND a.isDeleted = 0`
+            : `WHERE a.isDeleted = 0`)
             pool.query(`SELECT a.username, a.firstname, a.lastname, 
             a.mobileNo, a.phoneNo, a.email, 
             b.roleId AS RoleId,b.roleName AS RoleName 
@@ -45,10 +45,41 @@ class User{
             })
         })
     }
+    updateUser(userId, firstName, lastName, mobileNo, phoneNo, email){
+        return new Promise((resolve, reject) => {
+            pool.query(`UPDATE account_user SET firstname = ${pool.escape(firstName)}, 
+            lastname=${pool.escape(lastName)}, mobileNo=${pool.escape(mobileNo)}, 
+            phoneNo=${pool.escape(phoneNo)}, email=${pool.escape(email)} 
+            WHERE userid=${pool.escape(userId)} AND isDeleted = 0`, 
+            (error, result, fields) => {
+                if(error){
+                    reject(error)
+                }
+                else{
+                    const Queryresult = {result:result, fields: fields}
+                    resolve(Queryresult)
+                }
+            })
+        })
+    }
+    deleteUser(userId){
+        return new Promise((resolve, reject) => {
+            pool.query(`UPDATE account_user SET isDeleted = 1 WHERE userid=${pool.escape(userId)}`,
+            (error, result, fields) => {
+                if(error){
+                    reject(error)
+                }
+                else{
+                    const Queryresult = {result:result, fields: fields}
+                    resolve(Queryresult)
+                }
+            })
+        })
+    }
     loginUser(username, password){
         return new Promise((resolve, reject) => {
             pool.query(`SELECT username, password, firstname, lastname FROM account_user
-            WHERE username=${pool.escape(username)}`, (error, result, fields) => {
+            WHERE username=${pool.escape(username)} AND isDeleted = 0`, (error, result, fields) => {
                 if(error){
                     reject(error)
                 }

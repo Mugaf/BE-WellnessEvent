@@ -38,40 +38,41 @@ exports.Read = (req, res) => {
     })
 }
 
-// exports.Update = (req, res) => {
-//     const request = req.body
-//     classUser.updateUser(request.username, request.password, request.firstname,
-//         request.lastname, request.email, request.position)
-//     .then(() => {
-//         return res.status(200).json({
-//             success: true,
-//             message: 'user is updated!'
-//         })
-//     })
-//     .catch(err => {
-//         return res.status(500).json({
-//             success: false,
-//             message: (process.env.Environment !== 'Production') ? err : 'something when wrong!' 
-//         })
-//     }) 
-// }
+exports.Update = (req, res) => {
+    const request = req.body
+    classUser.updateUser(request.userid, request.firstname,
+        request.lastname, request.mobileno, request.phoneno, request.email)
+    .then(() => {
+        return res.status(200).json({
+            success: true,
+            message: 'user is updated!'
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        return res.status(500).json({
+            success: false,
+            message: (process.env.Environment !== 'Production') ? err : 'something when wrong!' 
+        })
+    }) 
+}
 
-// exports.Delete = (req, res) => {
-//     const request = req.body
-//     classUser.deleteUser(request.username)
-//     .then(() => {
-//         return res.status(200).json({
-//             success: true,
-//             message: 'user is deleted!'
-//         })
-//     })
-//     .catch(err => {
-//         return res.status(500).json({
-//             success: false,
-//             message: (process.env.Environment !== 'Production') ? err : 'something when wrong!' 
-//         })
-//     })
-// }
+exports.Delete = (req, res) => {
+    const request = req.body
+    classUser.deleteUser(request.userid)
+    .then(() => {
+        return res.status(200).json({
+            success: true,
+            message: 'user is deleted!'
+        })
+    })
+    .catch(err => {
+        return res.status(500).json({
+            success: false,
+            message: (process.env.Environment !== 'Production') ? JSON.stringify(err) : 'something when wrong!' 
+        })
+    })
+}
 
 exports.Login = (req, res) => {
     const request = req.body
