@@ -77,7 +77,7 @@ class User{
     }
     loginUser(username, password){
         return new Promise((resolve, reject) => {
-            pool.query(`SELECT username, password, firstname, lastname FROM account_user
+            pool.query(`SELECT username, password, firstname, lastname, roleid FROM account_user
             WHERE username=${pool.escape(username)} AND isDeleted = 0`, (error, result, fields) => {
                 if(error){
                     reject(error)
