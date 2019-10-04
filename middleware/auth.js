@@ -12,5 +12,50 @@ module.exports = {
         success: false, message: 'Token is Invalid' + ', ' + err.message
       })
     }
+  },
+  isAdmin: (req, res, next) => {
+    try {
+      const roleid = req.user.roleid
+      if (roleid == 1) next()
+      else {
+        res.status(401).json({
+          success: false, message: 'Not Authorized'
+        })
+      }
+    } catch (err) {
+      res.status(401).json({
+        success: false, message: 'Token is Invalid' + ', ' + err.message
+      })
+    }
+  },
+  isVendor: (req, res, next) => {
+    try {
+      const roleid = req.user.roleid
+      if (roleid == 1 || roleid == 2) next()
+      else {
+        res.status(401).json({
+          success: false, message: 'Not Authorized'
+        })
+      }
+    } catch (err) {
+      res.status(401).json({
+        success: false, message: 'Token is Invalid' + ', ' + err.message
+      })
+    }
+  },
+  isHR: (req, res, next) => {
+    try {
+      const roleid = req.user.roleid
+      if (roleid == 1 || roleid == 3) next()
+      else {
+        res.status(401).json({
+          success: false, message: 'Not Authorized'
+        })
+      }
+    } catch (err) {
+      res.status(401).json({
+        success: false, message: 'Token is Invalid' + ', ' + err.message
+      })
+    }
   }
 }
