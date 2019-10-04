@@ -5,6 +5,7 @@ const user = require('./user')
 const company = require('./company')
 const vendor = require('./vendor')
 const Auth = require('../../../middleware/auth')
+const event = require('./event')
 
 router.get('/test', (req, res) => {
     res.status(200).json({
@@ -14,6 +15,7 @@ router.get('/test', (req, res) => {
 router.use('/role', Auth.isAuth, Auth.isAdmin, role)
 router.use('/user',  user)
 router.use('/company', Auth.isAuth, Auth.isAdmin, company)
-router.use('/vendor', Auth.isAuth, Auth.isAdmin, vendor)
+router.use('/vendor', Auth.isAuth, vendor)
+router.use('/event', Auth.isAuth, event)
 
 module.exports = router
