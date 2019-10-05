@@ -40,7 +40,7 @@ exports.Read = (req, res) => {
     })
 }
 
-exports.Reject = (req, req) => {
+exports.Reject = (req, res) => {
     const request = req.body
     classEvent.rejectEvent(request.eventId, request.rejectReason, req.user.userid)
     .then(result => {
