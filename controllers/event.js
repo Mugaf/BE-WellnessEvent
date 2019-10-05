@@ -40,6 +40,24 @@ exports.Read = (req, res) => {
     })
 }
 
+exports.Reject = (req, req) => {
+    const request = req.body
+    classEvent.rejectEvent(request.eventId, request.rejectReason, req.user.userid)
+    .then(result => {
+        const data = result.result
+        return res.status(200).json({
+            success: true,
+            message: 'Data Rejected!',
+        })
+    })
+    .catch(err => {
+        return res.status(500).json({
+            success: false,
+            message: (process.env.Environment !== 'Production') ? err : 'something when wrong!' 
+        })
+    })
+}
+
 // exports.Update = (req, res) => {
 //     const request = req.body
 //     classUser.updateUser(request.eventId, request.eventName,

@@ -33,7 +33,6 @@ class Event{
     }
     readEvent(eventId, userId){
         return new Promise((resolve, reject) => {
-            console.log(eventId)
             let strWhere = (eventId!==undefined)?
             `WHERE a.eventid=${pool.escape(eventId)} AND a.isDeleted=0
              AND (c.userid = ${pool.escape(userId)} OR b.userid = ${pool.escape(userId)})`:
@@ -49,7 +48,22 @@ class Event{
                     reject(error)
                 }
                 else{
-                    console.log(query)
+                    const Queryresult = {result:result, fields: fields}
+                    resolve(Queryresult)
+                }
+            })
+        })
+    }
+    rejectEvent(eventId, rejectReason, userId){
+        return new Promise((resolve, reject) => {
+            let query = `UPDATE event SET status='REJECTED', rejectReason=${pool.escape(rejectReason)}, 
+            updatedBy=(SELECT firstname FROM account_user WHERE userid=${pool.escape(userId)}) 
+            WHERE eventid = ${pool.escape(eventId)}`
+            pool.query(query, (error, result, fields) => {
+                if(error){
+                    reject(error)
+                }
+                else{
                     const Queryresult = {result:result, fields: fields}
                     resolve(Queryresult)
                 }
