@@ -58,6 +58,24 @@ exports.Reject = (req, res) => {
     })
 }
 
+exports.Approve = (req, res) => {
+    const request = req.body
+    classEvent.approveEvent(request.eventId, request.confirmedDate, req.user.userid)
+    .then(result => {
+        const data = result.result
+        return res.status(200).json({
+            success: true,
+            message: 'Data Approved!',
+        })
+    })
+    .catch(err => {
+        return res.status(500).json({
+            success: false,
+            message: (process.env.Environment !== 'Production') ? err : 'something when wrong!' 
+        })
+    })
+}
+
 // exports.Update = (req, res) => {
 //     const request = req.body
 //     classUser.updateUser(request.eventId, request.eventName,

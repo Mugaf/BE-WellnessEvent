@@ -9,5 +9,6 @@ router.route('/')
     // .put(EventControllers.Update)
     // .delete(EventControllers.Delete)
 router.put('/reject', Auth.isVendor, EventControllers.Reject)
+router.put('/approve', Auth.isVendor, EventControllers.Approve)
 
 module.exports = router

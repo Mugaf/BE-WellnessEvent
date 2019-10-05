@@ -70,6 +70,23 @@ class Event{
             })
         })
     }
+
+    approveEvent(eventId, confirmedDate, userId){
+        return new Promise((resolve, reject) => {
+            let query = `UPDATE event SET status='APPROVED', confirmeddate=${pool.escape(confirmedDate)}, 
+            updatedBy=(SELECT firstname FROM account_user WHERE userid=${pool.escape(userId)}) 
+            WHERE eventid = ${pool.escape(eventId)}`
+            pool.query(query, (error, result, fields) => {
+                if(error){
+                    reject(error)
+                }
+                else{
+                    const Queryresult = {result:result, fields: fields}
+                    resolve(Queryresult)
+                }
+            })
+        })
+    }
     // updateEvent(eventId, eventName, eventDetail, userId){
     //     return new Promise((resolve, reject) => {
     //         pool.query(`UPDATE event SET eventname=${pool.escape(eventName)}, 
