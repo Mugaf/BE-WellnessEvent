@@ -1,0 +1,9 @@
+this is API For Wellness event booking. this API need .env by creator to connect to database remote.
+how to deploy.
+1.install npm first(it is required) 
+2.clone this git repository into your pc 
+3.go to inside project directory and run "npm install"
+4.copy .env file by application creator.
+5.dont forget to connect to the internet because we are using remote database
+6.start the api server with "npm start" 
+7.the API ready to use.
